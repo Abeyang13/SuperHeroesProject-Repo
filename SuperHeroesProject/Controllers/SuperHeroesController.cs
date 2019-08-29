@@ -19,7 +19,7 @@ namespace SuperHeroesProject.Controllers
         // GET: SuperHeroes
         public ActionResult Index()
         {
-            return View();
+            return View(context.SuperHeroes.ToList());
         }
 
         // GET: SuperHeroes/Details/5
