@@ -23,10 +23,10 @@ namespace SuperHeroesProject.Controllers
         }
 
         // GET: SuperHeroes/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int ID)
         {
-            
-            return View();
+            var selectHero = context.SuperHeroes.Find(ID);
+            return View(selectHero);
         }
 
         // GET: SuperHeroes/Create
