@@ -23,9 +23,9 @@ namespace SuperHeroesProject.Controllers
         }
 
         // GET: SuperHeroes/Details/5
-        public ActionResult Details(int ID)
+        public ActionResult Details(int id)
         {
-            var selectHero = context.SuperHeroes.Find(ID);
+            var selectHero = context.SuperHeroes.Find(id);
             return View(selectHero);
         }
 
@@ -56,18 +56,24 @@ namespace SuperHeroesProject.Controllers
         // GET: SuperHeroes/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var selectHero = context.SuperHeroes.Find(id);
+            return View(selectHero);
         }
 
         // POST: SuperHeroes/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(SuperHero selectHero)
         {
             try
             {
                 // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+               if (ModelState.IsValid)
+                {
+                    context.Entry(selectHero).State = System.Data.Entity.EntityState.Modified;
+                    context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View();
             }
             catch
             {
@@ -78,17 +84,20 @@ namespace SuperHeroesProject.Controllers
         // GET: SuperHeroes/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var selectHero = context.SuperHeroes.Find(id);
+            return View(selectHero);
         }
 
         // POST: SuperHeroes/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(SuperHero selectHero)
         {
             try
             {
                 // TODO: Add delete logic here
-
+                var deleteHero = context.SuperHeroes.Where(s => s.ID == selectHero.ID).SingleOrDefault();
+                context.SuperHeroes.Remove(deleteHero);
+                context.SaveChanges();
                 return RedirectToAction("Index");
             }
             catch
